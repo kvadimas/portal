@@ -1,0 +1,13 @@
+<!-- templates/posts/index.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Последние обновления на сайте{% endblock %}
+{% block content %}
+<div class="container">
+  <h1>Последние обновления на сайте</h1>
+  {% for post in page_obj %}
+    <h3>{{ post.title }}</h3>
+    <p>{{ post.text }}</p>
+  {% endfor %}
+</div>
+{% endblock %}
