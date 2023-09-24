@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.core import validators
+from django.template.defaultfilters import truncatechars
 from django.db import models
 
 User = get_user_model()
@@ -31,6 +32,11 @@ class Post(models.Model):
         null=True,
     )
     text = models.TextField('Описание', max_length=20000)
+
+    def short_text_field(self):
+        return truncatechars(self.text, 50)
+
+    short_text_field.short_description = 'Описание'
 
     def __str__(self):
         return f'{self.author} - {self.pub_date} - {self.title}'

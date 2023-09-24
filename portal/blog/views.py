@@ -14,11 +14,12 @@ def paginate_queryset(object, request):
 # Главная страница
 def index(request):
     template = 'posts/index.html'
-    post = Post.objects.select_related('author',).order_by('pub_date')
+    post = Post.objects.prefetch_related('tags').select_related(
+        'author',
+    ).order_by('pub_date')
     page_obj = paginate_queryset(post, request)
     context = {
         'title': 'test',
         'page_obj': page_obj,
     }
-    print(page_obj)
     return render(request, template, context)
