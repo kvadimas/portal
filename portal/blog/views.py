@@ -19,7 +19,7 @@ def index(request):
     ).order_by('pub_date')
     page_obj = paginate_queryset(post, request)
     context = {
-        'title': 'test',
+        'title': 'Последнии обновления на сайте',
         'page_obj': page_obj,
     }
     return render(request, template, context)

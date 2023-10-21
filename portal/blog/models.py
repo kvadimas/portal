@@ -31,7 +31,18 @@ class Post(models.Model):
         blank=True,
         null=True,
     )
-    text = models.TextField('Описание', max_length=20000)
+    text = models.TextField('Текст')
+    description = models.TextField(
+        'Описание',
+        blank=True,
+        null=True,
+        max_length=600
+    )
+
+    def save(self, *args, **kwargs):
+        if not self.description:
+            self.description = self.text[:600]
+        super(Post, self).save(*args, **kwargs)
 
     def short_text_field(self):
         return truncatechars(self.text, 50)

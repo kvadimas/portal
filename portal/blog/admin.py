@@ -7,7 +7,8 @@ from .models import Post, Tag
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'short_text_field', 'pub_date', 'author',  'get_photo')
+    list_display = ('pk', 'title', 'short_text_field', 'pub_date', 'author',
+                    'get_photo')
     search_fields = ('text',)
     list_filter = ('pub_date',)
     empty_value_display = '-пусто-'

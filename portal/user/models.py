@@ -60,8 +60,9 @@ class User(AbstractUser):
         blank=True,
         related_query_name='custom_user',
         related_name='custom_user_set', # изменён related_name
-        help_text='The groups this user belongs to. A user will get all permissions '
-                  'granted to each of their groups.',
+        help_text='Группы, к которым принадлежит этот пользователь.'
+                   'Пользователь получит все разрешения предоставленные'
+                   'каждой из их групп.',
         verbose_name='groups',
     )
     user_permissions = models.ManyToManyField(
@@ -69,7 +70,7 @@ class User(AbstractUser):
         blank=True,
         related_query_name='custom_user',
         related_name='custom_user_permission_set', # изменён related_name
-        help_text='Specific permissions for this user.',
+        help_text='Особые разрешения для этого пользователя.',
         verbose_name='user permissions',
     )
 

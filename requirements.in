@@ -1,0 +1,8 @@
+asgiref
+Django
+sqlparse
+Pillow
+djangorestframework
+black
+flake8
+mypy
