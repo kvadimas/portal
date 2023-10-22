@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY', default='django-insecure-123')
 
-DEBUG =  True #os.getenv('DEBUG', default='False') == 'True'
+DEBUG = True #os.getenv('DEBUG', default='False') == 'True'
 
 ALLOWED_HOSTS = os.getenv(
     'ALLOWED_HOSTS',
@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'api.apps.ApiConfig',
     'user.apps.UserConfig',
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [

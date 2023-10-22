@@ -1,7 +1,10 @@
 {% load static %}
+{% load thumbnail %}
 <div class="col-xl-10 d-xl-block mx-auto">
   <div class="card mb-4">
-    <img src="img/third_img.jpg" alt="" class="card-img-top" />
+    {% thumbnail post.image "1000x500" crop="center" upscale=True as im %}
+      <img class="card-img-top" src="{{ im.url }}">
+    {% endthumbnail %}
     <div class="card-body">
       <h4 class="card-title">{{ post.title }}</h4>
       <p class="card-text">{{ post.description }}</p>

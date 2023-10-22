@@ -6,3 +6,4 @@ djangorestframework
 black
 flake8
 mypy
+sorl-thumbnail
