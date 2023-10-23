@@ -10,6 +10,7 @@ class Tag(models.Model):
     name = models.CharField('Название', max_length=250)
     color = models.CharField('Цвет в HEX', max_length=7, unique=True)
     slug = models.SlugField('Уникальный слаг', max_length=200, unique=True)
+    posts = models.ManyToManyField("Post", through='PostTag')
 
     def __str__(self):
         return f'{self.name} - {self.slug}'
@@ -58,7 +59,7 @@ class Post(models.Model):
 
 
 class PostTag(models.Model):
-    teg = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
 

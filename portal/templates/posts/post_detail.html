@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% block title %}Пост: {{ post.title }}{% endblock %}
+{% block content %}
+<section class="my-post">
+  <div class="row">
+    <!-- ЭТО КОЛОНКА КОНТЕНТА ПОСТА -->
+    <div class="col-xl-8">
+      <!-- ЭТО ХЛЕБНЫЕ КРОШКИ -->
+      <nav aria-label="breadcrumb" class="mt-4">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="/">
+              <svg class="bi" width="16" height="16" fill="currentColor">
+                <use xlink:href="#home" />
+              </svg>
+            </a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">Пост номер 1</li>
+        </ol>
+      </nav>
+      <!-- ЭТО ТЕЛО ПОСТА -->
+      {% thumbnail post.image "1000x500" crop="center" upscale=True as im %}
+        <img class="img-fluid rounded" src="{{ im.url }}">
+      {% endthumbnail %}
+      <hr />
+      <h4 class="card-title">{{ post.title }}</h4>
+      <p>{{ post.text }}</p>
+      <hr />
+      <div class="d-flex justify-content-between align-items-center">
+        <p class="lead text-right">
+          Автор: <a href="#">{{ post.author }}</a>
+        </p>
+        <p>Опубликовано: {{ post.pub_date }}</p>
+      </div>
+      <!-- ЭТО КОМПОНЕНТ С КОММЕНТАРИЯМИ -->
+      <div class="card my-4">
+        <h5 class="card-header">Прокомментируй:</h5>
+        <div class="card-body">
+          <form>
+            <div class="form-group">
+              <textarea class="form-control" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Отправить</button>
+          </form>
+        </div>
+      </div>
+      <div class="media mb-5">
+        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="" />
+        <div class="media-body">
+          <h5 class="mt-0">Дуся Иванова</h5>
+          Мое очень важное мнение по данной статье. Мое очень важное мнение по данной статье. Мое очень важное мнение по данной статье. Мое очень важное мнение по данной статье. Мое очень важное мнение по данной статье.
+        </div>
+      </div>
+    </div>
+    <!-- ЭТО ПРАВАЯ КОЛОНКА -->
+    <div class="col-xl-4">
+      <div class="card my-4">
+        <h5 class="card-header">Теги</h5>
+        <div class="card-body">
+          <div class="row">
+            {% if not tags %}
+                <p>Нет тегов...</p>
+            {% else %}
+              <ul class="list-unstyled row">
+                {% for tag in tags %}
+                  <div class="col-6">
+                    <li>
+                      <a href="#"><span class="badge rounded-pill text-bg-secondary"><span class="" style="color:{{ tag.color }}">&#9679;</span> {{ tag.name }}</span></a>
+                    </li>
+                  </div>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="card my-4">
+        <h5 class="card-header">Последние статьи</h5>
+        <p>
+          <span class="" style="color:#F39C12">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cone-striped" viewBox="0 0 16 16" >
+              <path d="m9.97 4.88.953 3.811C10.159 8.878 9.14 9 8 9c-1.14 0-2.158-.122-2.923-.309L6.03 4.88C6.635 4.957 7.3 5 8 5s1.365-.043 1.97-.12zm-.245-.978L8.97.88C8.718-.13 7.282-.13 7.03.88L6.275 3.9C6.8 3.965 7.382 4 8 4c.618 0 1.2-.036 1.725-.098zm4.396 8.613a.5.5 0 0 1 .037.96l-6 2a.5.5 0 0 1-.316 0l-6-2a.5.5 0 0 1 .037-.96l2.391-.598.565-2.257c.862.212 1.964.339 3.165.339s2.303-.127 3.165-.339l.565 2.257 2.391.598z"/>
+            </svg>
+          </span>
+          В разработке.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
