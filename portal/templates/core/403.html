@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}
+  Failure - 403
+{% endblock %}
+{% block content %}
+  <section class="my-form">
+    <div class="row">
+      <div class="col-lg-10 d-lg-block mx-auto m-5 p-5 border-danger border rounded">
+        <div class="text-center lh-lg">
+          <h1>Ошибка 403</h1>
+          <p>
+            <span class="" style="color:#F39C12">
+              <svg class="bi" width="30" height="24">
+                <use xlink:href="#admin" />
+              </svg>
+            </span>
+          </p>
+          <p>В доступе отказано.</p>
+          <a href="{% url 'posts:index' %}" class="btn btn-sm btn-success me-2 m-2 p-3" title="Вернуться на главную">
+            <svg class="bi" width="32" height="32" fill="currentColor">
+              <use xlink:href="#home" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

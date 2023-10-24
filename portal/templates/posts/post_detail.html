@@ -17,7 +17,7 @@
               </svg>
             </a>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">Пост номер 1</li>
+          <li class="breadcrumb-item active" aria-current="page">{{ post.title }}</li>
         </ol>
       </nav>
       <!-- ЭТО ТЕЛО ПОСТА -->
@@ -26,7 +26,13 @@
       {% endthumbnail %}
       <hr />
       <h4 class="card-title">{{ post.title }}</h4>
-      <p>{{ post.text }}</p>
+      <div id="markdown-content">{{ post.text }}</div>
+      <script>
+          var content = document.getElementById('markdown-content');
+          var converter = new showdown.Converter();
+          var htmlContent = converter.makeHtml(content.textContent);
+          document.getElementById("markdown-content").innerHTML = htmlContent;
+      </script>
       <hr />
       <div class="d-flex justify-content-between align-items-center">
         <p class="lead text-right">

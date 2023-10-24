@@ -35,5 +35,4 @@ def post_detail(request, post_id):
         'title': post.title,
         'tags': tags
     }
-    print(tags)
     return render(request, template, context)
