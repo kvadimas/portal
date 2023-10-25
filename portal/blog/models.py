@@ -3,6 +3,8 @@ from django.core import validators
 from django.template.defaultfilters import truncatechars
 from django.db import models
 
+from martor.models import MartorField
+
 User = get_user_model()
 
 
@@ -32,8 +34,8 @@ class Post(models.Model):
         blank=True,
         null=True,
     )
-    text = models.TextField('Текст')
-    description = models.TextField(
+    text = MartorField('Текст')
+    description = MartorField(
         'Описание',
         blank=True,
         null=True,

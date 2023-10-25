@@ -1,6 +1,8 @@
 from django.contrib import admin
+from django.db import models
 from django.utils.safestring import mark_safe
 from django.utils.html import format_html
+from martor.widgets import AdminMartorWidget
 
 from .models import Post, Tag, PostTag
 
@@ -10,6 +12,9 @@ class PostTagInline(admin.TabularInline):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+        models.TextField: {'widget': AdminMartorWidget},
+    }
     list_display = ('pk', 'title', 'short_text_field', 'pub_date', 'author',
                     'get_photo', 'show_tags')
     search_fields = ('text',)

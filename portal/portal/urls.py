@@ -8,4 +8,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     #path('api/', include('api.urls')),
     path('', include('blog.urls')),
+    path('martor/', include('martor.urls')),
 ]

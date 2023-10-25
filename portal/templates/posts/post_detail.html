@@ -1,9 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load thumbnail %}
+{% load martortags %}
 {% block title %}Пост: {{ post.title }}{% endblock %}
+
+{% block css %}
+  <link href="{% static 'plugins/css/ace.min.css' %}" type="text/css" media="all" rel="stylesheet" />
+  <link href="{% static 'martor/css/martor.bootstrap.min.css' %}" type="text/css" media="all" rel="stylesheet" />
+{% endblock %}
+
 {% block content %}
-<section class="my-post">
+<section class="my-post martor-content">
   <div class="row">
     <!-- ЭТО КОЛОНКА КОНТЕНТА ПОСТА -->
     <div class="col-xl-8">
@@ -26,13 +33,7 @@
       {% endthumbnail %}
       <hr />
       <h4 class="card-title">{{ post.title }}</h4>
-      <div id="markdown-content">{{ post.text }}</div>
-      <script>
-          var content = document.getElementById('markdown-content');
-          var converter = new showdown.Converter();
-          var htmlContent = converter.makeHtml(content.textContent);
-          document.getElementById("markdown-content").innerHTML = htmlContent;
-      </script>
+      <div class="martor-preview">{{ post.text|safe_markdown }}</div>
       <hr />
       <div class="d-flex justify-content-between align-items-center">
         <p class="lead text-right">
@@ -96,4 +97,13 @@
     </div>
   </div>
 </section>
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript" src="{% static 'plugins/js/highlight.min.js' %}"></script>
+  <script>
+    $('.martor-preview pre').each(function(i, block){
+        hljs.highlightBlock(block);
+    });
+  </script>
 {% endblock %}

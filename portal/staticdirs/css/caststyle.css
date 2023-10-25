@@ -1,0 +1,56 @@
+.carousel-item {
+    height: 10rem;
+}
+
+.my-carousel {
+    padding: 0;
+}
+
+.my-carousel h5{
+    font-size: 30px;
+}
+
+.my-carousel p{
+    font-size: 15px;
+}
+
+.carousel-caption {
+    bottom: 20px;
+}
+
+.my-pagination {
+    margin-bottom: 65px;
+}
+
+.my-post {
+    margin: 10px;
+}
+
+.my-footer {
+    height: 45px;
+}
+
+.my-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button.btn {
+    white-space: nowrap;
+}
+
+button.btn svg {
+    margin-right: 5px;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+}
+
+.nav-link svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
