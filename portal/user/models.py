@@ -47,7 +47,7 @@ class User(AbstractUser):
     )
     karma = models.IntegerField(
         verbose_name='Карма',
-        blank=True,
+        default=0,
     )
     role = models.CharField(
         verbose_name='Роль',
@@ -55,6 +55,14 @@ class User(AbstractUser):
         choices=USER_ROLES,
         default='user',
     )
+
+    profile_pic = models.ImageField(
+        'Аватарка',
+        upload_to='blog/images/',
+        blank=True,
+        null=True,
+    )
+
     groups = models.ManyToManyField(
         'auth.Group',
         blank=True,

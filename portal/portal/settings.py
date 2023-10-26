@@ -118,7 +118,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'staticdirs'),]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'my_static'),]
 
 #  Папка сохранения медиа файлов
 MEDIA_URL = '/media/'
@@ -128,6 +128,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = "user.User"
 
 NUMBER_OF_POSTS = 10
 

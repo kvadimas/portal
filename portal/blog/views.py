@@ -15,6 +15,7 @@ def paginate_queryset(object, request):
 # Главная страница
 def index(request):
     template = 'posts/index.html'
+    user = request.user
     post = Post.objects.prefetch_related('tags').select_related(
         'author',
     ).order_by('pub_date')
@@ -22,6 +23,7 @@ def index(request):
     context = {
         'title': 'Последнии обновления на сайте',
         'page_obj': page_obj,
+        'user': user
     }
     return render(request, template, context)
 
@@ -29,10 +31,12 @@ def index(request):
 def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     template = 'posts/post_detail.html'
+    user = request.user
     tags = post.tags.all()
     context = {
         'post': post,
         'title': post.title,
-        'tags': tags
+        'tags': tags,
+        'user': user
     }
     return render(request, template, context)
