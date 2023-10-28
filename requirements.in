@@ -9,3 +9,6 @@ mypy
 sorl-thumbnail
 martor
 pytest
+python-dotenv
+gunicorn
+psycopg2-binary
