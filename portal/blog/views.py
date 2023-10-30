@@ -28,8 +28,8 @@ def index(request):
     return render(request, template, context)
 
 
-def post_detail(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
+def post_detail(request, post_slug):
+    post = get_object_or_404(Post, url=post_slug)
     template = 'posts/post_detail.html'
     user = request.user
     tags = post.tags.all()

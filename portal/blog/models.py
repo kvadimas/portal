@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core import validators
 from django.template.defaultfilters import truncatechars
 from django.db import models
+from transliterate import slugify
 
 from martor.models import MartorField
 
@@ -25,6 +26,7 @@ class Tag(models.Model):
 
 class Post(models.Model):
     pub_date = models.DateTimeField('Дата', auto_now_add=True)
+    url = models.SlugField('Url', max_length=100)
     tags = models.ManyToManyField(Tag, through='PostTag')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField('Название', max_length=250)
@@ -45,7 +47,13 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         if not self.description:
             self.description = self.text[:600]
+        if not self.url:
+            self.url = slugify(self.title[:100])
         super(Post, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('post_detail', kwargs={'post_slug': self.url})
 
     def short_text_field(self):
         return truncatechars(self.text, 50)

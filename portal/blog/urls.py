@@ -8,7 +8,7 @@ app_name = 'posts'
 
 urlpatterns = [
     path('', index, name='index'),
-    path('posts/<int:post_id>/', post_detail, name='post_detail'),
+    path('posts/<post_slug>/', post_detail, name='post_detail'),
 ]
 
 if settings.DEBUG:
