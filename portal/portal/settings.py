@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY', default='django-insecure-123')
 
-DEBUG = True #os.getenv('DEBUG', default='False') == 'True'
+DEBUG = os.getenv('DEBUG', default='False') == 'True'
 
 ALLOWED_HOSTS = os.getenv(
     'ALLOWED_HOSTS',
@@ -119,9 +119,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = os.getenv('LANGUAGE_CODE', default='en')
 
-TIME_ZONE = 'Europe/Moscow'
+TIME_ZONE = os.getenv('TIME_ZONE', default='UTP')
 
 USE_I18N = True
 
