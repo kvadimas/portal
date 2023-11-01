@@ -51,3 +51,8 @@ button.btn svg {
     height: 20px;
     margin-right: 5px;
 }
+
+.card-title.post-title {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
