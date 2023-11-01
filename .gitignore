@@ -166,7 +166,6 @@ cython_debug/
 **/images/
 **/img/
 *.jpg
-*.png
 
 
 htmlcov/
