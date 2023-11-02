@@ -8,11 +8,11 @@ User = get_user_model()
 
 class ModelTestCase(TestCase):
     @classmethod
-    def setUpClass(self):
+    def setUpClass(cls):
         super().setUpClass()
-        self.user = User.objects.create_user(username='test-user')
-        self.tag = create_tag()
-        self.post = create_post(self.user)
+        cls.user = User.objects.create_user(username='test-user')
+        cls.tag = create_tag()
+        cls.post = create_post(cls.user)
 
     def test_tag_model(self):
         """Проверяем, что тег создался с корректным значением name"""

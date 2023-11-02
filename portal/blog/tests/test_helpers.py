@@ -12,6 +12,7 @@ def create_tag():
 def create_post(user):
     return Post.objects.create(
         author=user,
+        url='test-slug',
         title='test',
         text='test' * 100,
     )

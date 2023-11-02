@@ -21,6 +21,7 @@ class PostAdmin(admin.ModelAdmin):
     list_filter = ('pub_date',)
     empty_value_display = '-пусто-'
     inlines = (PostTagInline,)
+    prepopulated_fields = {"url": ("title",)}
 
     def get_photo(self, object):
         if object.image and hasattr(object.image, 'url'):
