@@ -43,8 +43,21 @@
       </div>
       <!-- ЭТО КОМПОНЕНТ С КОММЕНТАРИЯМИ -->
       <div class="card my-4">
+        <script>
+          window.remark_config = {
+            host: 'http://comment.kvadimas.ru',
+            site_id: 'portal-comment',
+            components: ["counter"],
+            page_title: 'Пост' + location.pathname,
+            url: 'http://kvadimas.ru' + location.pathname,
+            theme: 'light',
+            locale: 'ru'
+          }
+        </script>
+        <script>!function(e,n){for(var o=0;o<e.length;o++){var r=n.createElement("script"),c=".js",d=n.head||n.body;"noModule"in r?(r.type="module",c=".mjs"):r.async=!0,r.defer=!0,r.src=remark_config.host+"/web/"+e[o]+c,d.appendChild(r)}}(remark_config.components||["embed"],document);</script>
         <h5 class="card-header">Прокомментируй:</h5>
         <div class="card-body">
+          <div id="remark42"></div>
           <form>
             <div class="form-group">
               <textarea class="form-control" rows="3"></textarea>
