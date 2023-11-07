@@ -21,7 +21,7 @@ ALLOWED_HOSTS = os.getenv(
 ).split()
 
 # Fix Forbidden (403) CSRF verification failed.
-CSRF_TRUSTED_ORIGINS = ['https://*.kvadimas.ru']
+CSRF_TRUSTED_ORIGINS = ['https://*.kvadimas.ru',]
 
 
 # Application definition
@@ -80,23 +80,23 @@ WSGI_APPLICATION = 'portal.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
-    "default": {
-        "ENGINE": os.getenv("DB_ENGINE", default="django.db.backends.postgresql"),
-        "NAME": os.getenv("DB_NAME", default="postgres"),
-        "USER": os.getenv("POSTGRES_USER", default="postgres"),
-        "PASSWORD": os.getenv("POSTGRES_PASSWORD", default="postgres"),
-        "HOST": os.getenv("DB_HOST", default="db"),
-        "PORT": os.getenv("DB_PORT", "5432"),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+#DATABASES = {
+#    "default": {
+#        "ENGINE": os.getenv("DB_ENGINE", default="django.db.backends.postgresql"),
+#        "NAME": os.getenv("DB_NAME", default="postgres"),
+#        "USER": os.getenv("POSTGRES_USER", default="postgres"),
+#        "PASSWORD": os.getenv("POSTGRES_PASSWORD", default="postgres"),
+#        "HOST": os.getenv("DB_HOST", default="db"),
+#        "PORT": os.getenv("DB_PORT", "5432"),
+#    }
+#}
 
 
 # Password validation

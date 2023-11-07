@@ -5,13 +5,16 @@ from django.contrib.auth.views import LogoutView
 
 from blog.views import index, post_detail, SignInView
 
-app_name = 'posts'
+app_name = 'blog'
+
+class LogoutViewAndRedirect(LogoutView):
+    next_page = '/'
 
 urlpatterns = [
     path('', index, name='index'),
     path('posts/<post_slug>/', post_detail, name='post_detail'),
     path('signin/', SignInView.as_view(), name='signin'),
-    path('signout/', LogoutView.as_view(), {'next_page': "/"}, name='signout',),
+    path('signout/', LogoutViewAndRedirect.as_view(), name='signout',),
 ]
 
 if settings.DEBUG:

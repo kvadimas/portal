@@ -21,7 +21,8 @@
               </div>
             {% endfor %}
           {% endif %}
-          <form class="form-signin" method="post" action="{% url 'signin' %}">
+          <form class="form-signin" method="post" action="{% url 'blog:signin' %}">
+            {% csrf_token %}
             <h1 class="h3 mb-3 mt-3 font-weight-normal">Пожалуйста укажите логин и пароль</h1>
             <label for="inputUsername" class="sr-only">Имя пользователя</label>
             {{ form.username }}
