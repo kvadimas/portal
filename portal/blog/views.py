@@ -1,9 +1,13 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
+from django.views import View
+from django.contrib.auth import login, authenticate
+from django.http import HttpResponseRedirect
 
 from portal.settings import NUMBER_OF_POSTS
 from blog.models import Post, PostTag, Tag
+from blog.forms import SignInForm
 
 def paginate_queryset(object, request):
     paginator = Paginator(object, NUMBER_OF_POSTS)
@@ -40,3 +44,23 @@ def post_detail(request, post_slug):
         'user': user
     }
     return render(request, template, context)
+
+class SignInView(View):
+    def get(self, request, *args, **kwargs):
+        form = SignInForm()
+        return render(request, 'myblog/signin.html', context={
+            'form': form,
+        })
+
+    def post(self, request, *args, **kwargs):
+        form = SignInForm(request.POST)
+        if form.is_valid():
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect('/')
+        return render(request, 'myblog/signin.html', context={
+            'form': form,
+        })
