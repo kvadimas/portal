@@ -24,10 +24,10 @@ def index(request):
     user = request.user
     post = Post.objects.prefetch_related('tags').select_related(
         'author',
-    ).order_by('pub_date')
+    ).order_by('-pub_date')
     page_obj = paginate_queryset(post, request)
     context = {
-        'title': 'Последнии обновления на сайте',
+        'title': 'Последние обновления',
         'page_obj': page_obj,
         'user': user
     }
