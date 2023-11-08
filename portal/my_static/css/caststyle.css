@@ -56,3 +56,7 @@ button.btn svg {
     padding-left: 1rem;
     padding-right: 1rem;
 }
+
+.last-post {
+    margin-bottom: 50px;
+}

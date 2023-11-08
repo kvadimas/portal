@@ -11,7 +11,7 @@
 
 {% block content %}
 <section class="my-post martor-content">
-  <div class="row">
+  <div class="row mb-5 mb-md-3">
     <!-- ЭТО КОЛОНКА КОНТЕНТА ПОСТА -->
     <div class="col-xl-8">
       <!-- ЭТО ХЛЕБНЫЕ КРОШКИ -->
@@ -43,21 +43,21 @@
       </div>
       <!-- ЭТО КОМПОНЕНТ С КОММЕНТАРИЯМИ -->
       <div class="card my-4">
+        <script>
+          window.remark_config = {
+            host: 'https://kvadimas.ru/comments-remark',
+            site_id: 'comments-remark',
+            components: ['embed', 'last-comments'],
+            page_title: 'Пост' + location.pathname,
+            url: 'https://kvadimas.ru' + location.pathname,
+            theme: 'light',
+            locale: 'ru'
+          }
+        </script>
+        <script>!function(e,n){for(var o=0;o<e.length;o++){var r=n.createElement("script"),c=".js",d=n.head||n.body;"noModule"in r?(r.type="module",c=".mjs"):r.async=!0,r.defer=!0,r.src=remark_config.host+"/web/"+e[o]+c,d.appendChild(r)}}(remark_config.components||["embed"],document);</script>
         <h5 class="card-header">Прокомментируй:</h5>
         <div class="card-body">
-          <form>
-            <div class="form-group">
-              <textarea class="form-control" rows="3"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Отправить</button>
-          </form>
-        </div>
-      </div>
-      <div class="media mb-5">
-        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="" />
-        <div class="media-body">
-          <h5 class="mt-0">Дуся Иванова</h5>
-            {% lorem 1 p random %}
+          <div id="remark42"></div>
         </div>
       </div>
     </div>
@@ -83,7 +83,7 @@
           </div>
         </div>
       </div>
-      <div class="card my-4">
+      <div class="card my-4 last-post">
         <h5 class="card-header">Последние статьи</h5>
         <p>
           <span class="" style="color:#F39C12">

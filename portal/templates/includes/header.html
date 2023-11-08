@@ -26,24 +26,31 @@
               </a>
               <ul class="dropdown-menu text-small" style="">
                 <li><a class="dropdown-item" href="#">New project...</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="/admin/">Settings</a></li>
                 <li><a class="dropdown-item" href="#">Profile</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">
+                <li><a class="dropdown-item" href="{% url 'blog:signout' %}">
                   <svg class="bi" width="14" height="14" fill="currentColor">
                     <use xlink:href="#door" />
                   </svg>
-                  Sign out
+                  Выход
                 </a></li>
               </ul>
             </div>
 
             {% else %}
-            <button type="button" class="btn btn-outline-primary me-2">
+            <button type="button" class="btn btn-outline-primary me-2" onclick="openSigninPage()">
               <svg class="bi" width="16" height="16" fill="currentColor">
                 <use xlink:href="#door" />
               </svg>Вход
             </button>
+
+            <script>
+              function openSigninPage() {
+                  window.location.href = "{% url 'blog:signin' %}";
+              }
+            </script>
+
             <button type="button" class="btn btn-outline-success me-2">
               <svg class="bi" width="16" height="16" fill="currentColor">
                 <use xlink:href="#reg" />
