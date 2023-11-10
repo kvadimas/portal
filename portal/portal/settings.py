@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'sorl.thumbnail',
     'martor',
+    'drf_spectacular',
 
     'blog.apps.BlogConfig',
     'api.apps.ApiConfig',
@@ -149,6 +150,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "user.User"
 
 NUMBER_OF_POSTS = 10
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'PORTAL-blog',
+    'DESCRIPTION': "API личного блога kvadimas'а. Рассказы о путешествиях, интересных наблюдениях и немного кодинга.",
+    'VERSION': 'v0.1-alpha',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
 
 ####################################
     ##  MARTOR  CONFIGURATION ##
