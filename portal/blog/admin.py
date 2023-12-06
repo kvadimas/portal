@@ -16,9 +16,9 @@ class PostAdmin(admin.ModelAdmin):
         models.TextField: {'widget': AdminMartorWidget},
     }
     list_display = ('title', 'short_text_field', 'pub_date', 'author',
-                    'get_photo', 'show_tags')
+                    'get_photo', 'show_tags', 'posting')
     search_fields = ('text',)
-    list_filter = ('pub_date',)
+    list_filter = ('pub_date','posting')
     empty_value_display = '-пусто-'
     inlines = (PostTagInline,)
     prepopulated_fields = {"url": ("title",)}
