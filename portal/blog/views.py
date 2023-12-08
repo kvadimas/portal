@@ -22,9 +22,9 @@ def paginate_queryset(object, request):
 def index(request):
     template = 'posts/index.html'
     user = request.user
-    post = Post.objects.prefetch_related('tags').select_related(
-        'author',
-    ).order_by('-pub_date')
+    post = Post.objects.filter(posting=True).prefetch_related(
+        'tags'
+    ).select_related('author',).order_by('-pub_date')
     page_obj = paginate_queryset(post, request)
     context = {
         'title': 'Последние обновления',

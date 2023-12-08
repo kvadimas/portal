@@ -42,6 +42,7 @@ class Post(models.Model):
         null=True,
         max_length=600
     )
+    posting = models.BooleanField("Публикация на сайте", default=False)
 
     def save(self, *args, **kwargs):
         if not self.description:

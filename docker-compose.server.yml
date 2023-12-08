@@ -9,6 +9,18 @@ services:
     volumes:
       - db_value:/var/lib/postgresql/data/
 
+  couchdb:
+    image: couchdb:3
+    container_name: db_obsidian
+    env_file:
+      - .env
+    volumes:
+      - db_obsidian:/opt/couchdb/data
+      - ./CouchDB/local.ini:/opt/couchdb/etc/local.ini
+    ports:
+      - 5984:5984
+    restart: always
+
   backend:
     image: kvadimas/portal_backend:latest
     restart: always

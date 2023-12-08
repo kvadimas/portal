@@ -12,3 +12,4 @@ pytest
 python-dotenv
 gunicorn
 psycopg2-binary
+drf-spectacular
