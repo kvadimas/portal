@@ -61,6 +61,7 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - /etc/ssl/kvadimas.ru/kvadimas.crt:/etc/ssl/kvadimas.ru.crt:ro
       - /etc/ssl/kvadimas.ru/kvadimas.key:/etc/ssl/kvadimas.ru.key:ro
+      - ./robots.txt:/var/html/robots.txt:ro
     ports:
       - "80:80"
       - "443:443"
