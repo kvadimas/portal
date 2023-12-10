@@ -30,7 +30,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField('Название', max_length=250)
     image = models.ImageField(
-        'Ссылка на картинку на сайте',
+        'Ссылка на заглавную картинку на сайте',
         upload_to='blog/images/',
         blank=True,
         null=True,
@@ -73,3 +73,30 @@ class Favorite(models.Model):
 
     def __str__(self):
         return f'{self.user} добавил {self.post} в избранное'
+
+class Image(models.Model):
+    jpg_png = models.ImageField(
+        'Ссылка на картинку jpg/png',
+        upload_to='blog/images/'
+    )
+    webp = models.ImageField(
+        'Ссылка на картинку webp',
+        upload_to='blog/images/',
+        blank=True,
+        null=True,
+    )
+    alt = models.CharField(
+        'Текстовое описание изображения',
+        max_length=50,
+        blank=True,
+        null=True
+    )
+    title = models.CharField(
+        'Всплывающая подсказка при наведении курсора',
+        max_length=50,
+        blank=True,
+        null=True
+    )
+
+    def __str__(self):
+        return f'{self.alt}'
