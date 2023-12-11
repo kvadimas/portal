@@ -29,12 +29,13 @@ class Post(models.Model):
     tags = models.ManyToManyField(Tag, through='PostTag')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField('Название', max_length=250)
-    image = models.ImageField(
-        'Ссылка на заглавную картинку на сайте',
-        upload_to='blog/images/',
-        blank=True,
-        null=True,
-    )
+    #  Меняю способ хранения картинок
+    #  image = models.ImageField(
+    #      'Ссылка на заглавную картинку на сайте',
+    #      upload_to='blog/images/',
+    #      blank=True,
+    #      null=True,
+    #  )
     text = MartorField('Текст')
     description = MartorField(
         'Описание',
@@ -74,10 +75,18 @@ class Favorite(models.Model):
     def __str__(self):
         return f'{self.user} добавил {self.post} в избранное'
 
-class Image(models.Model):
+class Images(models.Model):
+    post = models.ForeignKey(
+        'Post',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
     jpg_png = models.ImageField(
         'Ссылка на картинку jpg/png',
-        upload_to='blog/images/'
+        upload_to='blog/images/',
+        blank=True,
+        null=True,
     )
     webp = models.ImageField(
         'Ссылка на картинку webp',
@@ -100,3 +109,12 @@ class Image(models.Model):
 
     def __str__(self):
         return f'{self.alt}'
+
+
+class TechPost(Post):
+    '''Пост для постоянных статей, таких как about'''
+    pass
+
+    class Meta:
+        verbose_name = 'Стабильная статья'
+        verbose_name_plural = 'Стабильные статьи'
