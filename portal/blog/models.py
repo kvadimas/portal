@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
-from django.core import validators
 from django.template.defaultfilters import truncatechars
 from django.db import models
+from django.utils.safestring import mark_safe
 
 from martor.models import MartorField
 
@@ -14,12 +14,12 @@ class Tag(models.Model):
     slug = models.SlugField('Уникальный слаг', max_length=200, unique=True)
     posts = models.ManyToManyField("Post", through='PostTag')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{self.name} - {self.slug}'
 
     class Meta:
-        verbose_name = 'Тег'
-        verbose_name_plural = 'Теги'
+        verbose_name: str = 'Тег'
+        verbose_name_plural: str = 'Теги'
         ordering = ['name']
 
 
@@ -53,14 +53,18 @@ class Post(models.Model):
     def short_text_field(self):
         return truncatechars(self.text, 50)
 
-    short_text_field.short_description = 'Описание'
+    def get_images(self):
+        return "Нет изображения"
 
-    def __str__(self):
+    short_text_field.short_description: str = 'Описание'
+    get_images.short_description: str = "Миниатюры"
+
+    def __str__(self) -> str:
         return f'{self.author} - {self.pub_date} - {self.title}'
 
     class Meta:
-        verbose_name = 'Пост'
-        verbose_name_plural = 'Посты'
+        verbose_name: str = 'Пост'
+        verbose_name_plural: str = 'Посты'
 
 
 class PostTag(models.Model):
@@ -107,8 +111,22 @@ class Images(models.Model):
         null=True
     )
 
-    def __str__(self):
+    def get_photo(self):
+        if self.jpg_png and hasattr(self.jpg_png, 'url'):
+            return mark_safe(f'<img src="{self.jpg_png.url}" width=50>')
+        if self.webp and hasattr(self.webp, 'url'):
+            return mark_safe(f'<img src="{self.webp.url}" width=50>')
+        else:
+            return "Нет изображения"
+
+    get_photo.short_description: str = "Миниатюра"
+
+    def __str__(self) -> str:
         return f'{self.alt}'
+
+    class Meta:
+        verbose_name: str = 'Картинка'
+        verbose_name_plural: str = 'Картинки'
 
 
 class TechPost(Post):
@@ -116,5 +134,5 @@ class TechPost(Post):
     pass
 
     class Meta:
-        verbose_name = 'Стабильная статья'
-        verbose_name_plural = 'Стабильные статьи'
+        verbose_name: str = 'Стабильная статья'
+        verbose_name_plural: str = 'Стабильные статьи'

@@ -5,7 +5,7 @@ from django.contrib.auth.views import LogoutView
 
 from blog.views import index, post_detail, SignInView
 
-app_name = 'blog'
+app_name: str = 'blog'
 
 class LogoutViewAndRedirect(LogoutView):
     next_page = '/'
