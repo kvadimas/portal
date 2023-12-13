@@ -1,7 +1,5 @@
 from django.contrib import admin
 from django.db import models
-from django.utils.safestring import mark_safe
-from django.utils.html import format_html
 from martor.widgets import AdminMartorWidget
 
 from blog.models import Post, Tag, PostTag, TechPost, Images
@@ -30,12 +28,6 @@ class PostAdmin(admin.ModelAdmin):
     inlines = (PostTagInline, ImagesInline)
     prepopulated_fields = {"url": ("title",)}
 
-#    def get_photo(self, object):
-#        if object.image and hasattr(object.image, 'url'):
-#            return mark_safe(f'<img src="{object.image.url}" width=50>')
-#        else:
-#            return "Нет изображения"
-
     def show_tags(self, obj):
         return ", ".join([tag.name for tag in obj.tags.all()])
     show_tags.short_description = 'Tags'
@@ -49,8 +41,11 @@ class TagAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
 
 
-#  @admin.register(TechPost)
-#  class TechPostAdmin(admin.ModelAdmin):
+@admin.register(TechPost)
+class TechPostAdmin(admin.ModelAdmin):
+    readonly_fields = ('get_images',)
+    inlines = (ImagesInline,)
+    prepopulated_fields = {"url": ("title",)}
 
 
 @admin.register(Images)

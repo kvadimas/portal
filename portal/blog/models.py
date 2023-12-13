@@ -54,6 +54,12 @@ class Post(models.Model):
         return truncatechars(self.text, 50)
 
     def get_images(self):
+        image = Images.objects.filter(post=self)
+        st: str = ''
+        if image:
+            for i in image:
+                st += f'<img src="/media/{i.jpg_png}" width=50>'
+            return mark_safe(st)
         return "Нет изображения"
 
     short_text_field.short_description: str = 'Описание'
@@ -122,7 +128,7 @@ class Images(models.Model):
     get_photo.short_description: str = "Миниатюра"
 
     def __str__(self) -> str:
-        return f'{self.alt}'
+        return f'{self.alt} - {self.jpg_png}'
 
     class Meta:
         verbose_name: str = 'Картинка'
