@@ -2,7 +2,6 @@ from django.contrib.auth import get_user_model
 from django.template.defaultfilters import truncatechars
 from django.db import models
 from django.utils.safestring import mark_safe
-from blog.helpers import is_webp_image
 from webp import save_image
 
 User = get_user_model()
