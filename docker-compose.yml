@@ -4,16 +4,14 @@ services:
   db:
     image: postgres:16-alpine
     restart: always
-    env_file:
-      - .env
+    env_file: .env
     volumes:
       - db_value:/var/lib/postgresql/data/
 
   couchdb:
     image: couchdb:3
     container_name: db_obsidian
-    env_file:
-      - .env
+    env_file: .env
     volumes:
       - db_obsidian:/opt/couchdb/data
       - ./CouchDB/local.ini:/opt/couchdb/etc/local.ini
@@ -42,12 +40,19 @@ services:
     image: umputun/remark42:latest
     restart: always
     container_name: remark42
-    env_file:
-      - .env
+    env_file: .env
     volumes:
       - comment_value:/srv/var
     depends_on:
       - backend
+
+  ml_promobot:
+    image: kvadimas/promobot:latest
+    restart: always
+    env_file: .env
+    expose:
+      - "9000:9000"
+    container_name: ml_promobot
 
   nginx:
     image: nginx:1.24.0-alpine

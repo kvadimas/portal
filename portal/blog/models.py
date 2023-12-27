@@ -2,8 +2,8 @@ from django.contrib.auth import get_user_model
 from django.template.defaultfilters import truncatechars
 from django.db import models
 from django.utils.safestring import mark_safe
-
-from martor.models import MartorField
+from blog.helpers import is_webp_image
+from webp import save_image
 
 User = get_user_model()
 
@@ -29,7 +29,14 @@ class Post(models.Model):
     tags = models.ManyToManyField(Tag, through='PostTag')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField('Название', max_length=250)
-    image = models.ImageField(
+    text = models.TextField('Текст',)
+    description = models.TextField(
+        'Описание',
+        blank=True,
+        null=True,
+        max_length=600
+    )
+    label = models.ImageField(
         'Ссылка на заглавную картинку на сайте',
         upload_to='blog/images/',
         blank=True,
@@ -46,8 +53,7 @@ class Post(models.Model):
         return truncatechars(self.text, 50)
 
     def get_images(self):
-        post = PostTextsOrImages.objects.filter(post=self)
-        image = Images.objects.filter(post_texts_or_images=post)
+        image = Images.objects.filter(post=self)
         st: str = ''
         if image:
             for i in image:
@@ -80,9 +86,11 @@ class Favorite(models.Model):
 
 
 class Images(models.Model):
-    post_texts_or_images = models.ForeignKey(
-        'PostTextsOrImages',
+    post = models.ForeignKey(
+        "Post",
         on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
     jpg_png = models.ImageField(
         'Ссылка на картинку jpg/png',
@@ -125,44 +133,6 @@ class Images(models.Model):
     class Meta:
         verbose_name: str = 'Картинка'
         verbose_name_plural: str = 'Картинки'
-
-
-class PostTextsOrImages(models.Model):
-    post = models.ForeignKey(
-        'Post',
-        on_delete=models.CASCADE,
-    )
-
-
-class Texts(models.Model):
-    post_texts_or_images = models.ForeignKey(
-        'PostTextsOrImages',
-        on_delete=models.CASCADE,
-    )
-    text = MartorField('Текст')
-    description = MartorField(
-        'Описание',
-        blank=True,
-        null=True,
-        max_length=600
-    )
-
-    def save(self, *args, **kwargs):
-        if not self.description:
-            self.description = self.text[:600]
-        super(Post, self).save(*args, **kwargs)
-
-    def short_text_field(self):
-        return truncatechars(self.text, 50)
-
-    short_text_field.short_description: str = 'Описание'
-
-    def __str__(self) -> str:
-        return f'{truncatechars(self.text, 10)}'
-
-    class Meta:
-        verbose_name: str = 'Текст'
-        verbose_name_plural: str = 'Тексты'
 
 
 class TechPost(Post):
