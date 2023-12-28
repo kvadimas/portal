@@ -28,8 +28,8 @@
         </ol>
       </nav>
       <!-- ЭТО ТЕЛО ПОСТА -->
-      {% thumbnail post.image "1000x500" crop="center" upscale=True as im %}
-        <img class="img-fluid rounded" src="{{ im.url }}">
+      {% thumbnail post.label "1000x500" crop="center" upscale=True as im %}
+        <img class="img-fluid rounded" src="{{ im.url }}" alt="Лейбл поста {{ post.title }}">
       {% endthumbnail %}
       <hr />
       <h1 class="card-title post-title">{{ post.title }}</h1>
