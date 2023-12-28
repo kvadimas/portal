@@ -55,7 +55,7 @@ services:
     container_name: ml_promobot
 
   nginx:
-    image: nginx:1.24.0-alpine
+    image: nginx:1.25-alpine
     restart: always
     volumes:
       - static_value:/var/html/static/
@@ -71,7 +71,7 @@ services:
       - "80:80"
       - "443:443"
     depends_on:
-      - backend
+      - ml_promobot
 
 volumes:
   db_value:

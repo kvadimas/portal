@@ -6,6 +6,7 @@ from django.contrib.auth import login, authenticate
 from django.http import HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.cache import cache_page
 
 from portal.settings import NUMBER_OF_POSTS
 from blog.models import Post, PostTag, Tag
@@ -19,6 +20,7 @@ def paginate_queryset(object, request):
 
 
 # Главная страница
+@cache_page(60 * 20)
 def index(request):
     template = 'posts/index.html'
     user = request.user
@@ -34,6 +36,7 @@ def index(request):
     return render(request, template, context)
 
 
+@cache_page(60 * 20)
 def post_detail(request, post_slug):
     post = get_object_or_404(Post, url=post_slug)
     template = 'posts/post_detail.html'

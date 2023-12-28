@@ -23,7 +23,7 @@ class Tag(models.Model):
 
 
 class Post(models.Model):
-    pub_date = models.DateTimeField('Дата', auto_now_add=True)
+    pub_date = models.DateTimeField('Дата', auto_now_add=True, db_index=True)
     url = models.SlugField('Url', max_length=100)
     tags = models.ManyToManyField(Tag, through='PostTag')
     author = models.ForeignKey(User, on_delete=models.CASCADE)

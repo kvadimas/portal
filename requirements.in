@@ -14,3 +14,4 @@ gunicorn
 psycopg2-binary
 drf-spectacular
 webp
+django-debug-toolbar
