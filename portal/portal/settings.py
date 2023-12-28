@@ -11,6 +11,8 @@ SECRET_KEY = os.getenv('SECRET_KEY', default='django-insecure-123')
 
 DEBUG = os.getenv('DEBUG', default=False) == 'True'
 
+VERSION = "v0.3-alpha"
+
 ALLOWED_HOSTS = os.getenv(
     'ALLOWED_HOSTS',
     default='127.0.0.1 localhost'
@@ -162,7 +164,7 @@ REST_FRAMEWORK = {
 SPECTACULAR_SETTINGS = {
     'TITLE': 'PORTAL-blog',
     'DESCRIPTION': "API личного блога kvadimas'а. Рассказы о путешествиях, интересных наблюдениях и немного кодинга.",
-    'VERSION': 'v0.1-alpha',
+    'VERSION': VERSION,
     'SERVE_INCLUDE_SCHEMA': False,
 }
 

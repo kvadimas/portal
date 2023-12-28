@@ -8,7 +8,7 @@ handler403 = 'core.views.csrf_failure'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('api/', include('api.urls')),
+    path('api/', include('api.urls')),
     path('', include('blog.urls')),
     path('martor/', include('martor.urls')),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
