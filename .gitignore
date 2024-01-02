@@ -172,4 +172,6 @@ htmlcov/
 .coverage.*
 coverage.xml
 *.cover
-portal/.DS_Store
+
+**/*.DS_Store
+

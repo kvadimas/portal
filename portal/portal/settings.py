@@ -1,6 +1,3 @@
-"""
-Django settings for portal project.
-"""
 import os
 from pathlib import Path
 
@@ -8,17 +5,26 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY', default='django-insecure-123')
 
 DEBUG = os.getenv('DEBUG', default=False) == 'True'
 
+VERSION = "v0.3-alpha"
+
+FORECAST_URL = os.getenv('FORCAST_URL', default='')
+
 ALLOWED_HOSTS = os.getenv(
     'ALLOWED_HOSTS',
     default='127.0.0.1 localhost'
 ).split()
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}
 
 # Fix Forbidden (403) CSRF verification failed.
 CSRF_TRUSTED_ORIGINS = ['https://*.kvadimas.ru',]
@@ -38,6 +44,7 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     'martor',
     'drf_spectacular',
+    'debug_toolbar',
 
     'blog.apps.BlogConfig',
     'api.apps.ApiConfig',
@@ -53,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'portal.urls'
@@ -81,23 +89,23 @@ WSGI_APPLICATION = 'portal.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-#  DATABASES = {
-#      'default': {
-#          'ENGINE': 'django.db.backends.sqlite3',
-#          'NAME': BASE_DIR / 'db.sqlite3',
-#      }
-#  }
-
 DATABASES = {
-    "default": {
-        "ENGINE": os.getenv("DB_ENGINE", default="django.db.backends.postgresql"),
-        "NAME": os.getenv("DB_NAME", default="postgres"),
-        "USER": os.getenv("POSTGRES_USER", default="postgres"),
-        "PASSWORD": os.getenv("POSTGRES_PASSWORD", default="postgres"),
-        "HOST": os.getenv("DB_HOST", default="db"),
-        "PORT": os.getenv("DB_PORT", "5432"),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": os.getenv("DB_ENGINE", default="django.db.backends.postgresql"),
+#         "NAME": os.getenv("DB_NAME", default="postgres"),
+#         "USER": os.getenv("POSTGRES_USER", default="postgres"),
+#         "PASSWORD": os.getenv("POSTGRES_PASSWORD", default="postgres"),
+#         "HOST": os.getenv("DB_HOST", default="db"),
+#         "PORT": os.getenv("DB_PORT", "5432"),
+#     }
+# }
 
 
 # Password validation
@@ -153,12 +161,20 @@ NUMBER_OF_POSTS = 10
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.UserRateThrottle',
+        'rest_framework.throttling.AnonRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'user': '10000/day',
+        'anon': '1000/day',
+    }
 }
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'PORTAL-blog',
     'DESCRIPTION': "API личного блога kvadimas'а. Рассказы о путешествиях, интересных наблюдениях и немного кодинга.",
-    'VERSION': 'v0.1-alpha',
+    'VERSION': VERSION,
     'SERVE_INCLUDE_SCHEMA': False,
 }
 
@@ -214,3 +230,33 @@ ALLOWED_HTML_ATTRIBUTES = [
     "scope", "src", "style", "title", "type", "width"
 ]
 ####################################
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "[{asctime}]-{levelname}: {message}",
+            "datefmt": "%H:%M:%S",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "DEBUG",
+    },
+}

@@ -4,16 +4,14 @@ services:
   db:
     image: postgres:16-alpine
     restart: always
-    env_file:
-      - .env
+    env_file: .env
     volumes:
       - db_value:/var/lib/postgresql/data/
 
   couchdb:
     image: couchdb:3
     container_name: db_obsidian
-    env_file:
-      - .env
+    env_file: .env
     volumes:
       - db_obsidian:/opt/couchdb/data
       - ./CouchDB/local.ini:/opt/couchdb/etc/local.ini
@@ -42,15 +40,14 @@ services:
     image: umputun/remark42:latest
     restart: always
     container_name: remark42
-    env_file:
-      - .env
+    env_file: .env
     volumes:
       - comment_value:/srv/var
     depends_on:
       - backend
 
   nginx:
-    image: nginx:1.24.0-alpine
+    image: nginx:1.25-alpine
     restart: always
     volumes:
       - static_value:/var/html/static/
@@ -61,6 +58,7 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - /etc/ssl/kvadimas.ru/kvadimas.crt:/etc/ssl/kvadimas.ru.crt:ro
       - /etc/ssl/kvadimas.ru/kvadimas.key:/etc/ssl/kvadimas.ru.key:ro
+      - ./robots.txt:/var/html/robots.txt:ro
     ports:
       - "80:80"
       - "443:443"

@@ -1,9 +1,8 @@
 from django.contrib.auth import get_user_model
-from django.core import validators
 from django.template.defaultfilters import truncatechars
 from django.db import models
-
-from martor.models import MartorField
+from django.utils.safestring import mark_safe
+from webp import save_image
 
 User = get_user_model()
 
@@ -14,33 +13,33 @@ class Tag(models.Model):
     slug = models.SlugField('Уникальный слаг', max_length=200, unique=True)
     posts = models.ManyToManyField("Post", through='PostTag')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{self.name} - {self.slug}'
 
     class Meta:
-        verbose_name = 'Тег'
-        verbose_name_plural = 'Теги'
+        verbose_name: str = 'Тег'
+        verbose_name_plural: str = 'Теги'
         ordering = ['name']
 
 
 class Post(models.Model):
-    pub_date = models.DateTimeField('Дата', auto_now_add=True)
+    pub_date = models.DateTimeField('Дата', auto_now_add=True, db_index=True)
     url = models.SlugField('Url', max_length=100)
     tags = models.ManyToManyField(Tag, through='PostTag')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField('Название', max_length=250)
-    image = models.ImageField(
-        'Ссылка на картинку на сайте',
-        upload_to='blog/images/',
-        blank=True,
-        null=True,
-    )
-    text = MartorField('Текст')
-    description = MartorField(
+    text = models.TextField('Текст',)
+    description = models.TextField(
         'Описание',
         blank=True,
         null=True,
         max_length=600
+    )
+    label = models.ImageField(
+        'Ссылка на заглавную картинку на сайте',
+        upload_to='blog/images/',
+        blank=True,
+        null=True,
     )
     posting = models.BooleanField("Публикация на сайте", default=False)
 
@@ -52,14 +51,24 @@ class Post(models.Model):
     def short_text_field(self):
         return truncatechars(self.text, 50)
 
-    short_text_field.short_description = 'Описание'
+    def get_images(self):
+        image = Images.objects.filter(post=self)
+        st: str = ''
+        if image:
+            for i in image:
+                st += f'<img src="/media/{i.jpg_png}" width=50>'
+            return mark_safe(st)
+        return "Нет изображения"
 
-    def __str__(self):
+    short_text_field.short_description: str = 'Описание'
+    get_images.short_description: str = "Миниатюры"
+
+    def __str__(self) -> str:
         return f'{self.author} - {self.pub_date} - {self.title}'
 
     class Meta:
-        verbose_name = 'Пост'
-        verbose_name_plural = 'Посты'
+        verbose_name: str = 'Пост'
+        verbose_name_plural: str = 'Посты'
 
 
 class PostTag(models.Model):
@@ -73,3 +82,62 @@ class Favorite(models.Model):
 
     def __str__(self):
         return f'{self.user} добавил {self.post} в избранное'
+
+
+class Images(models.Model):
+    post = models.ForeignKey(
+        "Post",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    jpg_png = models.ImageField(
+        'Ссылка на картинку jpg/png',
+        upload_to='blog/images/',
+        blank=True,
+        null=True,
+    )
+    webp = models.ImageField(
+        'Ссылка на картинку webp',
+        upload_to='blog/images/',
+        blank=True,
+        null=True,
+    )
+    alt = models.CharField(
+        'Текстовое описание изображения',
+        max_length=50,
+        blank=True,
+        null=True
+    )
+    title = models.CharField(
+        'Всплывающая подсказка при наведении курсора',
+        max_length=50,
+        blank=True,
+        null=True
+    )
+
+    def get_photo(self):
+        if self.jpg_png and hasattr(self.jpg_png, 'url'):
+            return mark_safe(f'<img src="{self.jpg_png.url}" width=50>')
+        if self.webp and hasattr(self.webp, 'url'):
+            return mark_safe(f'<img src="{self.webp.url}" width=50>')
+        else:
+            return "Нет изображения"
+
+    get_photo.short_description: str = "Миниатюра"
+
+    def __str__(self) -> str:
+        return f'{self.alt} - {self.jpg_png}'
+
+    class Meta:
+        verbose_name: str = 'Картинка'
+        verbose_name_plural: str = 'Картинки'
+
+
+class TechPost(Post):
+    '''Пост для постоянных статей, таких как about'''
+    pass
+
+    class Meta:
+        verbose_name: str = 'Стабильная статья'
+        verbose_name_plural: str = 'Стабильные статьи'

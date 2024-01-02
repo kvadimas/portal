@@ -3,8 +3,8 @@
 {% load martortags %}
 <div class="col-xl-10 d-xl-block mx-auto">
   <div class="card mb-4">
-    {% thumbnail post.image "1000x500" crop="center" upscale=True as im %}
-      <img class="card-img-top" src="{{ im.url }}">
+    {% thumbnail post.label "1000x500" crop="center" upscale=True as im %}
+      <img class="card-img-top" src="{{ im.url }}" alt="Лейбл поста {{ post.title }}" title="{{ post.title }}">
     {% endthumbnail %}
     <div class="card-body">
       <h2 class="card-title">{{ post.title }}</h2>
