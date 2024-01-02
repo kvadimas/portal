@@ -8,22 +8,7 @@
     <nav class="navbar bg-body-tertiary" aria-label="Light offcanvas navbar">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Demo 'ИИПобеда'</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarLight" aria-controls="offcanvasNavbarLight" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbarLight" aria-labelledby="offcanvasNavbarLightLabel">
-          <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasNavbarLightLabel">Documentation</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-          </div>
-          <div class="offcanvas-body">
-            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/docs/">Swagger</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/redoc/">Redoc</a>
-              </li>
-            </ul>
-          </div>
+        <a class="navbar-brand" href="/">Вернуться на главную</a>
         </div>
       </div>
     </nav>
@@ -38,13 +23,9 @@
                 <div class="form-group">
                   {% csrf_token %}
                   {{ form.as_p }}
-                  <!--  <textarea name="text" placeholder="Введите сообщение" class="form-control form-control-lg" required autofocus></textarea>
-
-                        <input type="text" id="text" name="text" class="form-control form-control-lg" required>
-                          -->
                 </div>
               </p>
-              <p>Внимание! Обработка запроса может занимать около минуты! Пожалуйста подождите.</p>
+              <p></p>
               <p>
                 <button type="submit" class="btn btn-primary">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-envelope-arrow-down" viewBox="0 0 16 16">
@@ -54,17 +35,9 @@
                 </button>
               </p>
             </form>
-            <div id="result"></div>
-            <div id="error"></div>
-            <!--  <div>
-                    <hr>
-                    <h2>Ответ:</h2>
-                    <p>Группа: <span id="group"></span></p>
-                    <p>Подгруппа: <span id="sub"></span></p>
-                    <p>Локация: <span id="location"></span></p>
-                    <p>Департамент: <span id="department"></span></p>
-                    <p>Текст: <span id="result"></span></p>
-                </div>  -->
+            <div class="alert alert-info" role="alert" id="result">
+              Внимание! Обработка запроса может занимать около минуты! Пожалуйста подождите.
+            </div>
           </div>
         </div>
       </div>
