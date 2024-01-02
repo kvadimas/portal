@@ -87,9 +87,15 @@
               }
           }).then(response => response.json()) // парсим ответ как JSON
           .then(data => {
-              if(data.result) {
-                  // Если есть результат, отображаем его на странице
-                  document.getElementById('result').textContent = JSON.stringify(data.result, null, 2);
+              if (data.result) {
+                const resultElement = document.getElementById('result');
+                resultElement.innerHTML = ''; // Очищаем содержимое элемента
+
+                for (const key in data.result) {
+                    const lineElement = document.createElement('div');
+                    lineElement.textContent = `${key}: ${JSON.stringify(data.result[key])}`;
+                    resultElement.appendChild(lineElement);
+                }
               }
               if(data.error) {
                   // Если есть ошибка, отображаем её

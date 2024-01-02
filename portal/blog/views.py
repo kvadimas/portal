@@ -83,37 +83,18 @@ class SignInView(View):
 @method_decorator(csrf_protect, name='post')
 class MlPromobotInView(View):
     template = 'prototype/ml_promobot.html'
+
     def get(self, request, *args, **kwargs):
         form = MlPromobotInForm()
         return render(request, self.template, context={'form': form,})
 
     def post(self, request, *args, **kwargs):
         form = MlPromobotInForm(request.POST)
-        context = {'form': form}
         if form.is_valid():
-            #if throttler():
-            logger.info("go forecast")
-            result = forecast(form.cleaned_data['text'])
-            #else:
-            #    logger.warning("Превышен лимит запросов к forecast")
-            #    context['result'] = {'error':'Превышен лимит запросов. Пожалуйста, попробуйте позже.'}
-            print(context)
+            if throttler():
+                logger.info("go forecast")
+                result = forecast(form.cleaned_data['text'])
+            else:
+                logger.warning("Превышен лимит запросов к forecast")
+                result = {'error':'Превышен лимит запросов. Пожалуйста, попробуйте позже.'}
         return JsonResponse({'form': str(form), 'result': result})
-        #return render(request, self.template, context=context)
-
-##@extend_schema(tags=["Prototype"])
-#def prototype_ml_promobot(request):
-#    if request.method == 'POST':
-#        if throttler():
-#            print("throttl True")
-#            logger.warning(f"throttl True")
-#            try:
-#                result = forecast(message="Тестовое сообщение")
-#            except:
-#                result = {}
-#        else:
-#            result = {}
-#        return JsonResponse(result)
-#    if request.method == 'GET':
-#        template = 'prototype/ml_promobot.html'
-#        return render(request, template)

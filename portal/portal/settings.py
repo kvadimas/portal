@@ -13,7 +13,7 @@ DEBUG = os.getenv('DEBUG', default=False) == 'True'
 
 VERSION = "v0.3-alpha"
 
-FORECAST_URL = os.getenv('FORCAST_URL', default='https://bba9dbers47645t2hi61.containers.yandexcloud.net/api/v1/send/')
+FORECAST_URL = os.getenv('FORCAST_URL', default='')
 
 ALLOWED_HOSTS = os.getenv(
     'ALLOWED_HOSTS',
@@ -244,7 +244,8 @@ LOGGING = {
             "style": "{",
         },
         "simple": {
-            "format": "{levelname} {message}",
+            "format": "[{asctime}]-{levelname}: {message}",
+            "datefmt": "%H:%M:%S",
             "style": "{",
         },
     },

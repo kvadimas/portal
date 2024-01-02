@@ -45,6 +45,7 @@ def forecast(message: str):
             return r.json()
         else:
             logger.warning(f"Processing from the Forecasting API: Error {r.status_code}")
-            return None
+            return {"error": f"Processing from the Forecasting API: Error {r.status_code}"}
     except:
         logger.warning("Error: I can't connect to the forecast service.")
+        return {"error": "I can't connect to the forecast service."}
