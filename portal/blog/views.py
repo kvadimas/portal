@@ -17,8 +17,6 @@ from api.service import ThrottlingForecasts, forecast
 
 logger = logging.getLogger("__name__")
 
-# Разрешено не более 50 операций в течение 1 суток
-throttler = ThrottlingForecasts(limit=50, interval=(60 * 60 * 24))
 
 def paginate_queryset(object, request):
     paginator = Paginator(object, NUMBER_OF_POSTS)
@@ -83,6 +81,8 @@ class SignInView(View):
 @method_decorator(csrf_protect, name='post')
 class MlPromobotInView(View):
     template = 'prototype/ml_promobot.html'
+    # Разрешено не более 50 операций в течение 1 суток
+    throttler = ThrottlingForecasts(limit=50, interval=(60 * 60 * 24))
 
     def get(self, request, *args, **kwargs):
         form = MlPromobotInForm()

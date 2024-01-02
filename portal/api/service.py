@@ -36,9 +36,8 @@ class ThrottlingForecasts:
 def forecast(message: str):
     try:
         headers = {'content-type': 'application/json'}
-        url = 'https://bba9dbers47645t2hi61.containers.yandexcloud.net/api/v1/send/'
         data = json.dumps({"text": message})
-        r = requests.post(url, headers=headers, data=data, timeout=60)
+        r = requests.post(FORECAST_URL, headers=headers, data=data, timeout=60)
 
         if r.status_code == 200:
             logger.warning(f"Processing from the Forecasting API: HTML {r.status_code}")
