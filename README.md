@@ -70,3 +70,9 @@ http://localhost:80
 3. Docker
 
 ## Использовались библиотеки
+
+
+[python-dotenv](https://pypi.org/project/python-dotenv/)
+
+[remark42](https://github.com/umputun/remark42)
+
