@@ -1,16 +1,24 @@
+import logging
+import json
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
 from django.views import View
 from django.contrib.auth import login, authenticate
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.cache import cache_page
 
 from portal.settings import NUMBER_OF_POSTS
 from blog.models import Post, PostTag, Tag
-from blog.forms import SignInForm
+from blog.forms import SignInForm, MlPromobotInForm
+from api.service import ThrottlingForecasts, forecast
+
+logger = logging.getLogger("__name__")
+
+# Разрешено не более 50 операций в течение 1 суток
+throttler = ThrottlingForecasts(limit=50, interval=(60 * 60 * 24))
 
 def paginate_queryset(object, request):
     paginator = Paginator(object, NUMBER_OF_POSTS)
@@ -71,3 +79,41 @@ class SignInView(View):
         return render(request, 'registration/signin.html', context={
             'form': form,
         })
+
+@method_decorator(csrf_protect, name='post')
+class MlPromobotInView(View):
+    template = 'prototype/ml_promobot.html'
+    def get(self, request, *args, **kwargs):
+        form = MlPromobotInForm()
+        return render(request, self.template, context={'form': form,})
+
+    def post(self, request, *args, **kwargs):
+        form = MlPromobotInForm(request.POST)
+        context = {'form': form}
+        if form.is_valid():
+            #if throttler():
+            logger.info("go forecast")
+            result = forecast(form.cleaned_data['text'])
+            #else:
+            #    logger.warning("Превышен лимит запросов к forecast")
+            #    context['result'] = {'error':'Превышен лимит запросов. Пожалуйста, попробуйте позже.'}
+            print(context)
+        return JsonResponse({'form': str(form), 'result': result})
+        #return render(request, self.template, context=context)
+
+##@extend_schema(tags=["Prototype"])
+#def prototype_ml_promobot(request):
+#    if request.method == 'POST':
+#        if throttler():
+#            print("throttl True")
+#            logger.warning(f"throttl True")
+#            try:
+#                result = forecast(message="Тестовое сообщение")
+#            except:
+#                result = {}
+#        else:
+#            result = {}
+#        return JsonResponse(result)
+#    if request.method == 'GET':
+#        template = 'prototype/ml_promobot.html'
+#        return render(request, template)

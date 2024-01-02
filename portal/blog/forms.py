@@ -1,6 +1,4 @@
 from django import forms
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
 
 
 class SignInForm(forms.Form):
@@ -19,3 +17,11 @@ class SignInForm(forms.Form):
             'id': "inputPassword",
         })
     )
+
+
+class MlPromobotInForm(forms.Form):
+    text = forms.CharField(label='', widget=forms.Textarea(attrs={"cols": "30", "rows": "3"}))
+    #group = forms.CharField(label='Group', max_length=100)
+    #sub = forms.CharField(label='Subject', max_length=100)
+    #location = forms.CharField(label='Location', max_length=100)
+    #department = forms.CharField(label='Department', max_length=100)
