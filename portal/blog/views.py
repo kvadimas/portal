@@ -1,5 +1,4 @@
 import logging
-import json
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
@@ -16,6 +15,7 @@ from blog.forms import SignInForm, MlPromobotInForm
 from api.service import ThrottlingForecasts, forecast
 
 logger = logging.getLogger("__name__")
+throttler = ThrottlingForecasts(limit=3, interval=(60))
 
 
 def paginate_queryset(object, request):
@@ -81,8 +81,6 @@ class SignInView(View):
 @method_decorator(csrf_protect, name='post')
 class MlPromobotInView(View):
     template = 'prototype/ml_promobot.html'
-    # Разрешено не более 50 операций в течение 1 суток
-    throttler = ThrottlingForecasts(limit=50, interval=(60 * 60 * 24))
 
     def get(self, request, *args, **kwargs):
         form = MlPromobotInForm()
