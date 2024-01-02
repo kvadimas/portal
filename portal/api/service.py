@@ -40,7 +40,7 @@ def forecast(message: str):
         r = requests.post(FORECAST_URL, headers=headers, data=data, timeout=60)
 
         if r.status_code == 200:
-            logger.warning(f"Processing from the Forecasting API: HTML {r.status_code}")
+            logger.info(f"Processing from the Forecasting API: HTML {r.status_code}")
             return r.json()
         else:
             logger.warning(f"Processing from the Forecasting API: Error {r.status_code}")
