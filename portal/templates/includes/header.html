@@ -89,6 +89,7 @@
                   Docs
                 </a>
               </li>
+              {% if user.is_authenticated %}
               <li class="nav-item">
                 <a class="nav-link" href="/admin/">
                   <svg class="bi" width="20" height="20" fill="currentColor">
@@ -97,6 +98,15 @@
                   Админка
                 </a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/pgadmin4/">
+                  <svg class="bi" width="20" height="20" fill="currentColor">
+                    <use xlink:href="#dbinfo" />
+                  </svg>
+                  pgAdmin 4
+                </a>
+              </li>
+              {% endif %}
               <li class="nav-item">
                 <a class="nav-link" href="/prototype/ml_promobot/">
                   <svg class="bi" width="20" height="20" fill="currentColor">
