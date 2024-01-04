@@ -44,6 +44,17 @@ services:
       - "9000:9000"
     container_name: ml_promobot
 
+  pgadmin4:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin4
+    env_file: .env
+    restart: unless-stopped
+    volumes:
+      - ./pgAdmin4/config_local.py:/pgadmin4/config_local.py
+      - pgadmin4_value:/var/lib/pgadmin/
+    depends_on:
+      - db
+
   remark42:
     image: umputun/remark42:latest
     restart: always
@@ -82,3 +93,4 @@ volumes:
   my_static_value:
   comment_value:
   db_obsidian:
+  pgadmin4_value:

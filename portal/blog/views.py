@@ -78,6 +78,7 @@ class SignInView(View):
             'form': form,
         })
 
+
 @method_decorator(csrf_protect, name='post')
 class MlPromobotInView(View):
     template = 'prototype/ml_promobot.html'
