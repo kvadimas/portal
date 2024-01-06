@@ -11,7 +11,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', default='django-insecure-123')
 
 DEBUG = os.getenv('DEBUG', default=False) == 'True'
 
-VERSION = "v0.3-alpha"
+VERSION = "v0.4-alpha"
 
 FORECAST_URL = os.getenv('FORCAST_URL', default='')
 

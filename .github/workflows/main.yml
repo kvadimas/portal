@@ -61,4 +61,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/portal_backend:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/portal_backend:v0.4-alpha
