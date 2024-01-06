@@ -20,11 +20,11 @@ ALLOWED_HOSTS = os.getenv(
     default='127.0.0.1 localhost'
 ).split()
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-    }
-}
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+#     }
+# }
 
 # Fix Forbidden (403) CSRF verification failed.
 CSRF_TRUSTED_ORIGINS = ['https://*.kvadimas.ru',]
