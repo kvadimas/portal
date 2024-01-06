@@ -26,7 +26,6 @@ def paginate_queryset(object, request):
 
 
 # Главная страница
-@cache_page(60 * 1)
 def index(request):
     template = 'posts/index.html'
     user = request.user
