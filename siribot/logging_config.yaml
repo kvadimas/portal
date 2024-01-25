@@ -1,0 +1,85 @@
+version: 1
+disable_existing_loggers: True
+
+formatters:
+  default:
+    format: "|%(asctime)s|%(levelname)-8s|%(filename)-15s|%(message)s|"
+
+  formatter_stream:
+    (): logging_settings.MyColoredFormatter
+    format: "[%(asctime)s]%(log_color)s%(levelname)s: %(message)s %(reset)s"
+    datefmt: "%H:%M:%S"
+
+  formatter_file:
+    format: "|%(asctime)s|%(levelname)-8s|%(filename)-15s|%(message)s|"
+
+#filters:
+
+handlers:
+  default:
+    class: logging.StreamHandler
+    formatter: default
+
+  stderr:
+    class: logging.StreamHandler
+    formatter: formatter_stream
+
+  stdout:
+    class: logging.StreamHandler
+    formatter: formatter_stream
+    stream: ext://sys.stdout
+
+  error_file:
+    class: logging.handlers.RotatingFileHandler
+    filename: error.log
+    formatter: formatter_file
+    mode: a
+    level: DEBUG
+    maxBytes: 20500
+    backupCount: 3
+
+loggers:
+  uvicorn:
+    handlers: [stdout]
+    level: INFO
+    propagate: False
+
+  main:
+    level: INFO
+    handlers: [stdout, error_file]
+    propagate: False
+
+  routers:
+    level: DEBUG
+    handlers: [stdout, error_file]
+    propagate: False
+
+  couch_db:
+    level: DEBUG
+    handlers: [stdout, error_file]
+    propagate: False
+
+  tg_handlers:
+    level: DEBUG
+    handlers: [stdout, error_file]
+    propagate: False
+
+  ya_gpt_chat:
+    level: DEBUG
+    handlers: [stdout, error_file]
+    propagate: False
+
+  servis:
+    level: WARNING
+    handlers: [stdout, error_file]
+    propagate: False
+
+  tg_events:
+    level: DEBUG
+    handlers: [stdout, error_file]
+    propagate: False
+
+root:
+  formatter: default
+  handlers: [default]
+  level: DEBUG

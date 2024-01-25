@@ -21,6 +21,17 @@ services:
       - 5984:5984
     restart: always
 
+  siribot:
+    image: kvadimas/siribot:latest
+    restart: always
+    ports:
+      - 9005:9005
+    depends_on:
+      - couchdb
+    volumes:
+      - ./siribot/logging_config.yaml:/app/logging_config.yaml
+      - ./siribot/settings.yml:/app/settings.yml
+
   backend:
     image: kvadimas/portal_backend:latest
     restart: always
